@@ -1,0 +1,12 @@
+# 🚀 Jenkins Setup on AWS EC2 (Ubuntu)
+
+- Created and configured **AWS EC2 Ubuntu instance**  
+- Connected via **SSH** and installed **Java (OpenJDK 17)**  
+- Installed and configured **Jenkins CI/CD server**  
+- Opened **port 8080** and updated **Security Group inbound rules**  
+- Accessed Jenkins through **public IP** in browser  
+- Verified Jenkins dashboard and service status  
+
+**Skills:** AWS EC2 | Linux | Jenkins | Java | SSH | Security Groups | Port Management  
+
+📘 *Hands-on project demonstrating end-to-end Jenkins deployment on AWS.*
