@@ -1,0 +1,40 @@
+# 🌐 Host a "Hello World" Website on AWS EC2 using Nginx
+
+## 🧩 Overview
+Deployed a simple website on an AWS EC2 Ubuntu instance using Nginx web server. Covered instance setup, installation, custom page creation, and verification.
+
+## ⚙️ Steps Performed
+1️⃣ **Launch EC2 Instance**
+- Region: `us-east-1 (N. Virginia)` | AMI: Ubuntu 22.04 LTS | Type: `t2.micro`
+- Security Group: Allow **SSH (22)** and **HTTP (80)**
+
+2️⃣ **Connect to Instance**
+```bash
+ssh -i "key.pem" ubuntu@<Public-IP>
+
+3️⃣ Install Nginx
+
+sudo apt update -y
+sudo apt install nginx -y
+
+4️⃣ Verify Server
+Visit http://<Public-IP> → default Nginx page loads.
+
+5️⃣ Replace Default Page
+
+sudo nano /var/www/html/index.nginx-debian.html
+
+6️⃣ Restart Nginx
+
+sudo systemctl restart nginx
+
+7️⃣ Test Website
+Visit http://<Public-IP> → ✅ displays “Hello World”.
+
+🧰 Tools & Technologies
+
+AWS EC2 • Ubuntu • Nginx • SSH
+
+🎯 Result
+
+Successfully hosted a static "Hello World" website on AWS EC2 using Nginx.
