@@ -1,0 +1,77 @@
+# AWS IAM — Summary & Step-by-Step Guide
+This document explains AWS Identity and Access Management (IAM) concepts and gives clear, step-by-step instructions to create users, groups, policies, and roles, and to test role assumption.
+
+What is IAM? (Short summary)
+AWS IAM (Identity and Access Management) lets you securely control who can access AWS resources (authentication) and what they can do (authorization). Use IAM to create users and groups, create and attach policies, and create roles that AWS services or trusted users/accounts can assume. IAM supports fine-grained permissions, temporary credentials (via STS AssumeRole), and auditing via CloudTrail.
+
+Key concepts (one line each)
+
+User — an identity (person or application) that can sign in or call AWS APIs.
+Group — an easy way to manage permissions for multiple users.
+Policy — a JSON document that defines allowed/denied actions on resources.
+Role — a set of permissions that can be assumed by trusted entities (users, services, accounts). Roles provide temporary credentials.
+Trust policy — part of a role that lists which principals are allowed to assume it (sts:AssumeRole).
+STS (Security Token Service) — issues temporary credentials when assuming roles.
+Least privilege — give only the permissions needed, when needed.
+
+Step-by-Step: Create Users, Groups, Policies, and a Role
+A. Create IAM Users (Console)
+Open IAM Console → Users → Create user.
+Enter username (e.g., Dev1, Dev2, Test1, Test2).
+Select access type: Programmatic access (access key), AWS Management Console access, or both.
+Configure password and optionally require password reset.
+Create user and save credentials securely.
+B. Create Groups (Console)
+IAM Console → User groups → Create group.
+Enter group name (e.g., Dev Team, Ops Team).
+(Optionally) attach existing policies now or attach later.
+Create group.
+C. Add Users to Groups (Console)
+Open a group → Add users → select users (e.g., add Dev1, Dev2 to Dev Team).
+Add Dev1, Test1, Test2 to Ops Team.
+Confirm membership.
+D. Create & Attach Policies
+Managed policies (AWS): Use AWS managed policies for common needs (e.g., AmazonDynamoDBFullAccess, AmazonVPCFullAccess).
+Custom policies: Create JSON policy documents for least privilege.
+Console steps: IAM → Policies → Create policy → JSON or Visual editor → Review → Create.
+
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "dynamodb:*",
+        "ec2:*",
+        "ec2:Describe*",
+      ],
+      "Resource": "*"
+    }
+  ]
+}
+
+
+E. Create a Role (Console) — allow only specific users to assume it
+IAM Console → Roles → Create role.
+Choose Another AWS account or This account for Trusted entity depending on scenario (for users in same account, use "This account").
+Attach required permission policies (e.g., AmazonVPCFullAccess, AmazonDynamoDBFullAccess).
+Create the role.
+Then set the trust policy to allow only specific users (example below).
+Example trust policy (only user1 & user2 can assume the role):
+
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": [
+          "arn:aws:iam::123456789012:user/user1",
+          "arn:aws:iam::123456789012:user/user2"
+        ]
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+
